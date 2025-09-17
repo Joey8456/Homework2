@@ -1,3 +1,4 @@
+import random
 def generate_sbox_2d():
     """ #COMMENT: SOLE PURPOSE IS TO PROVIDE A COPY OF SBOX WHEN NEEDED/FUNCTION IS CALLED.
     Generate the AES S-box as a 16x16 2D array.
@@ -170,6 +171,14 @@ def xor(b1, b2):
             val = val + '0'
     return val
 
+def generate_roundkey():
+    new_key = [["@" for _ in range(4)] for _ in range(4)]
+    for r in range(4):
+        for c in range(4):
+            new_letter = random.randint(97,122)
+            new_key[r][c] = chr(new_letter)
+    return new_key
+
 
 def print_state(state, title="State"):
     """
@@ -222,7 +231,9 @@ def main():
     print_state(after_shiftrows, "After Shift Rows")
 
     # After RoundKey
-    roundkey = [['a', 'b', 'c', 'd'], ['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l'], ['m', 'n', 'o', 'p']] #COMMENT: Make round key not hardcoded
+
+    roundkey = generate_roundkey() #COMMENT: Make round key not hardcoded
+    print(roundkey)
     after_roundkeys = addRoundKey(roundkey, after_shiftrows)
     print_state(after_roundkeys, "After Round Keys")
 
