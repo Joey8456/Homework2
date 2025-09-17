@@ -1,3 +1,5 @@
+#Adam Stahly
+#Joseph Barron
 import random
 def generate_sbox_2d():
     """ #COMMENT: SOLE PURPOSE IS TO PROVIDE A COPY OF SBOX WHEN NEEDED/FUNCTION IS CALLED.
