@@ -1,5 +1,6 @@
 #Adam Stahly
 #Joseph Barron
+import math
 import random
 def generate_sbox_2d():
     """ #COMMENT: SOLE PURPOSE IS TO PROVIDE A COPY OF SBOX WHEN NEEDED/FUNCTION IS CALLED.
@@ -203,14 +204,24 @@ def main():
     plaintext = input("Enter plaintext: ")
 
     # Pad or truncate to exactly 16 characters
-    if len(plaintext) < 16:                   #COMMENT: Checks if len is 16, if not it pads it with null characters
-        plaintext = plaintext.ljust(16, '\0')  # Pad with null characters
+    if len(plaintext) <= 16:                   #COMMENT: Checks if len is 16, if not it pads it with null characters
+        plaintext = plaintext.ljust(16, '\0') # Pad with null characters
+        create_matrix(plaintext)
     elif len(plaintext) > 16:
-        plaintext = plaintext[:16]  # Truncate to 16 characters
+        block_amount = math.ceil(len(plaintext)/16)
+        for i in range(0, block_amount):
+            text_block = plaintext[16*i:16*(i+1)]
+            if i+1 == block_amount:
+                text_block = text_block.ljust(16, '\0')
+            print("Block #:" + str(i+1))
+            create_matrix(text_block)
+            # Truncate to 16 characters
         # #COMMENT FIX to allow more than 16 bytes to be encrypted
 
     # Convert plaintext to 4x4 state matrix
     # AES state is filled column by column
+
+def create_matrix(plaintext):
     test_state = [[0 for _ in range(4)] for _ in range(4)]
     for i in range(16):     #COMMENT: Fills it column by column
         row = i % 4
@@ -238,6 +249,5 @@ def main():
     print(roundkey)
     after_roundkeys = addRoundKey(roundkey, after_shiftrows)
     print_state(after_roundkeys, "After Round Keys")
-
 
 main()
