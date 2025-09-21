@@ -263,7 +263,6 @@ def create_matrix(plaintext):
     # After RoundKey
 
     roundkey = generate_roundkey() #COMMENT: Make round key not hardcoded
-    print(roundkey)
     after_roundkeys = addRoundKey(roundkey, after_shiftrows)
     print_state(after_roundkeys, "After Round Keys")
 
