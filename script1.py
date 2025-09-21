@@ -115,6 +115,15 @@ def subbytes(state):
 
 
 def shiftRows(matrix):
+    """
+        Apply the ShiftRows transformation to the AES state using left shift.
+
+        Args:
+            state: 4x4 matrix (list of lists) representing the AES state
+
+        Returns:
+            4x4 matrix with ShiftRows transformation applied
+        """
     # Create a copy of the state to avoid modifying the original
     new_state = [[0 for _ in range(4)] for _ in range(4)]
 
@@ -140,6 +149,16 @@ def getBinary(letter):
 
 
 def addRoundKey(roundkey, matrix):
+    """
+            Apply the RoundKey transformation to the AES state using randomly generated round key.
+
+            Args:
+                state: 4x4 matrix (list of lists) representing the AES state
+                roundkey: 4x4 matrix (list of lists) representing the round key
+
+            Returns:
+                4x4 matrix with RoundKey transformation applied
+            """
     # Create a copy of the state to avoid modifying the original
     new_state = [[0 for _ in range(4)] for _ in range(4)]
 
