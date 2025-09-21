@@ -1,6 +1,7 @@
 #Adam Stahly
 #Joseph Barron
 import random
+import math
 def generate_sbox_2d():
     """ #COMMENT: SOLE PURPOSE IS TO PROVIDE A COPY OF SBOX WHEN NEEDED/FUNCTION IS CALLED.
     Generate the AES S-box as a 16x16 2D array.
@@ -191,19 +192,9 @@ def print_state(state, title="State"):
         print(" ".join(f"{byte:02x}" for byte in row)) #COMMENT: converts it to hexidecimal
     print()
 
-
-# Example usage and testing
-def main():
-    print("AES SubBytes Step with 2D S-box Lookup")
-    print("=" * 50)
-
-    # Display the S-box table
-    # print_sbox()
-
-    plaintext = input("Enter plaintext: ")
-
+def execute_encryption(plaintext):
     # Pad or truncate to exactly 16 characters
-    if len(plaintext) < 16:                   #COMMENT: Checks if len is 16, if not it pads it with null characters
+    if len(plaintext) < 16:  # COMMENT: Checks if len is 16, if not it pads it with null characters
         plaintext = plaintext.ljust(16, '\0')  # Pad with null characters
     elif len(plaintext) > 16:
         plaintext = plaintext[:16]  # Truncate to 16 characters
@@ -212,32 +203,43 @@ def main():
     # Convert plaintext to 4x4 state matrix
     # AES state is filled column by column
     test_state = [[0 for _ in range(4)] for _ in range(4)]
-    for i in range(16):     #COMMENT: Fills it column by column
+    for i in range(16):  # COMMENT: Fills it column by column
         row = i % 4
         col = i // 4
         test_state[row][col] = ord(plaintext[i])
 
-    print(f"Input plaintext: '{plaintext}'")     #COMMENT: Displays the chars, ASCII value of chars & hex
+    print(f"Input plaintext: '{plaintext}'")  # COMMENT: Displays the chars, ASCII value of chars & hex
     print("Characters: " + " ".join(f'{c:>3}' for c in plaintext))
     print("Bytes     : " + " ".join(f'{ord(c):3}' for c in plaintext))
     print("Hex       : " + " ".join(f'{ord(c):3x}' for c in plaintext))
 
-    print_state(test_state, "Original State") #COMMENT: Pass in our array of our plain text prints it in HEX
+    print_state(test_state, "Original State")  # COMMENT: Pass in our array of our plain text prints it in HEX
 
     # Apply SubBytes with detailed lookup information
-    after_subbytes = subbytes(test_state) #COMMENT: pass in our array of plaintext,
+    after_subbytes = subbytes(test_state)  # COMMENT: pass in our array of plaintext,
     print_state(after_subbytes, "After SubBytes")
 
     # Apply ShiftRows
-    after_shiftrows = shiftRows(after_subbytes) #COMMNENT: Shifts rows by row number.
+    after_shiftrows = shiftRows(after_subbytes)  # COMMNENT: Shifts rows by row number.
     print_state(after_shiftrows, "After Shift Rows")
 
     # After RoundKey
-
-    roundkey = generate_roundkey() #COMMENT: Make round key not hardcoded
+    roundkey = generate_roundkey()  # COMMENT: Make round key not hardcoded
     print(roundkey)
     after_roundkeys = addRoundKey(roundkey, after_shiftrows)
     print_state(after_roundkeys, "After Round Keys")
 
+# Example usage and testing
+def main():
+    print("AES SubBytes Step with 2D S-box Lookup")
+    print("=" * 50)
 
+    # Display the S-box table
+    # print_sbox()
+    plaintext = input("Enter plaintext: ")
+    block_number = math.ceil(len(plaintext)/16)
+    for i in range(block_number):
+        bytes_to_encrypt = plaintext[:16]
+        plaintext = plaintext[16:]
+        execute_encryption(bytes_to_encrypt)
 main()
