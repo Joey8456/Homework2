@@ -210,23 +210,21 @@ def main():
     elif len(plaintext) > 16:
         block_amount = math.ceil(len(plaintext)/16)
         for i in range(0, block_amount):
-            text_block = plaintext[16*i:16*(i+1)]
+            text_block = plaintext[16*i:16*(i+1)]  # Truncate to 16 characters
             if i+1 == block_amount:
                 text_block = text_block.ljust(16, '\0')
             print("Block #:" + str(i+1))
             create_matrix(text_block)
-            # Truncate to 16 characters
-        # #COMMENT FIX to allow more than 16 bytes to be encrypted
 
-    # Convert plaintext to 4x4 state matrix
+
     # AES state is filled column by column
-
+# #COMMENT FIX to allow more than 16 bytes to be encrypted
 def create_matrix(plaintext):
     test_state = [[0 for _ in range(4)] for _ in range(4)]
     for i in range(16):     #COMMENT: Fills it column by column
         row = i % 4
         col = i // 4
-        test_state[row][col] = ord(plaintext[i])
+        test_state[row][col] = ord(plaintext[i]) # Convert plaintext to 4x4 state matrix
 
     print(f"Input plaintext: '{plaintext}'")     #COMMENT: Displays the chars, ASCII value of chars & hex
     print("Characters: " + " ".join(f'{c:>3}' for c in plaintext))
