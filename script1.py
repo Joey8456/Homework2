@@ -182,7 +182,7 @@ def addRoundKey(roundkey, matrix):
 
 def xor(b1, b2):
     val = ''
-    for i in range(len(b1)): #COMMENT: IF BITS ARE SAME = 0, IF BITS ARE OPPOPSITE = 1
+    for i in range(len(b1)): #COMMENT: IF BITS ARE SAME = 0, IF BITS ARE OPPOSITE = 1
         if b1[i] == '0' and b2[i] == '0':
             val = val + '0'
         elif b1[i] == '0' and b2[i] == '1':
