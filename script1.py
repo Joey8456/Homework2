@@ -119,7 +119,7 @@ def shiftRows(matrix):
         Apply the ShiftRows transformation to the AES state using left shift.
 
         Args:
-            state: 4x4 matrix (list of lists) representing the AES state
+            matrix: 4x4 matrix (list of lists) representing the AES state
 
         Returns:
             4x4 matrix with ShiftRows transformation applied
@@ -153,7 +153,7 @@ def addRoundKey(roundkey, matrix):
             Apply the RoundKey transformation to the AES state using randomly generated round key.
 
             Args:
-                state: 4x4 matrix (list of lists) representing the AES state
+                matrix: 4x4 matrix (list of lists) representing the AES state
                 roundkey: 4x4 matrix (list of lists) representing the round key
 
             Returns:
